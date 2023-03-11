@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Sunday March 12th 2023 02:13:57 +0800
+ * Last Modified: Sunday March 12th 2023 03:45:33 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -18,6 +18,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 )
 
@@ -88,6 +89,11 @@ func SendSingleMT(textType string, to string, from string, message string, title
 		q.Add(key, value)
 	}
 	req.URL.RawQuery = q.Encode()
+
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Printf("API Url: %s\n", req.URL.String())
+		fmt.Printf("Query Params: %s\n", req.URL.RawQuery)
+	}
 
 	// Send the HTTP request and read the response
 	client := &http.Client{}
