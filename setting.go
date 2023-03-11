@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Saturday March 11th 2023 22:39:29 +0800
+ * Last Modified: Sunday March 12th 2023 04:52:10 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -34,7 +34,7 @@ func init() {
 			User: "TEST000",
 			Pass: "",
 		},
-		DefaultFrom: "BerryPay",
+		DefaultFrom: "Private Sender",
 		MTSendPath:  "/bulksms/mesapi.aspx?",
 	}
 }
