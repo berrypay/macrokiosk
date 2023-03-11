@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Sunday March 12th 2023 04:15:58 +0800
+ * Last Modified: Sunday March 12th 2023 04:24:02 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -108,6 +108,67 @@ func SendSingleMT(textType string, to string, from string, message string, title
 	}
 
 	callResult, err := decodeSingleMTResponse(body)
+	if err != nil {
+		return nil, err
+	}
+
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Printf("Decoded Response: %v\n", callResult)
+	}
+
+	return callResult, nil
+}
+
+func SendMultiMT(textType string, to []string, from string, message string, title string) (*MTSendResponseMultiData, error) {
+	req, err := http.NewRequest("GET", Settings.BaseUrl+Settings.MTSendPath, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	encodedMessage := message
+	if textType == MkAsciiText {
+		encodedMessage = url.QueryEscape(message)
+	} else if textType == MkUnicodeText {
+		encodedMessage = convertToUCS2(message)
+	}
+
+	params := map[string]string{
+		"user":   GetCredential().User,
+		"pass":   GetCredential().Pass,
+		"type":   textType,
+		"to":     strings.Join(to, ","),
+		"from":   from,
+		"text":   encodedMessage,
+		"servid": "MES01",
+		"title":  title,
+		"detail": "1",
+	}
+
+	// Add the parameters to the URL query string
+	q := req.URL.Query()
+	for key, value := range params {
+		q.Add(key, value)
+	}
+	req.URL.RawQuery = q.Encode()
+
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Printf("API Url: %s\n", req.URL.String())
+	}
+
+	// Send the HTTP request and read the response
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	callResult, err := decodeMultiMTResponse(body)
 	if err != nil {
 		return nil, err
 	}
