@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Sunday March 12th 2023 03:45:33 +0800
+ * Last Modified: Sunday March 12th 2023 04:15:58 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -92,7 +92,6 @@ func SendSingleMT(textType string, to string, from string, message string, title
 
 	if os.Getenv("DEBUG") == "true" {
 		fmt.Printf("API Url: %s\n", req.URL.String())
-		fmt.Printf("Query Params: %s\n", req.URL.RawQuery)
 	}
 
 	// Send the HTTP request and read the response
@@ -108,10 +107,16 @@ func SendSingleMT(textType string, to string, from string, message string, title
 		return nil, err
 	}
 
-	// Print the response body to the console
-	fmt.Println(string(body))
+	callResult, err := decodeSingleMTResponse(body)
+	if err != nil {
+		return nil, err
+	}
 
-	return nil, nil
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Printf("Decoded Response: %v\n", callResult)
+	}
+
+	return callResult, nil
 }
 
 func decodeSingleMTResponse(body []byte) (*MTSendResponseSingleData, error) {
