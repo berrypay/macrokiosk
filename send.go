@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Monday March 13th 2023 10:26:37 +0800
+ * Last Modified: Monday March 13th 2023 10:37:47 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -63,6 +63,8 @@ func SendSingleMT(textType string, to string, from string, message string, title
 			fmt.Println("Text will be UCS2 encoded")
 		}
 		encodedMessage = convertToUCS2(message)
+	} else if textType == MkUDHFormatted {
+		// TODO: UDH Encoded message to be implemented
 	}
 
 	params := map[string]string{
@@ -125,6 +127,8 @@ func SendMultiMT(textType string, to []string, from string, message string, titl
 			fmt.Println("Text will be UCS2 encoded")
 		}
 		encodedMessage = convertToUCS2(message)
+	} else if textType == MkUDHFormatted {
+		// TODO: UDH Encoded message to be implemented
 	}
 
 	params := map[string]string{
