@@ -10,6 +10,10 @@ Use this library to integrate with Macrokiosk SMS Gateway API.
 > go get github.com/berrypay/macrokiosk
 ```
 
+## Documentation
+
+Documentation for the library can be found [here](https://pkg.go.dev/github.com/berrypay/macrokiosk#section-documentation)
+
 ## Developer Note
 
 Currently this library support automatic encoding of ASCII and UCS2 unicode for specifying the text parameter.
