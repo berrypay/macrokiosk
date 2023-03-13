@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Sunday March 12th 2023 04:24:02 +0800
+ * Last Modified: Monday March 13th 2023 08:49:13 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -20,12 +20,6 @@ import (
 	"net/url"
 	"os"
 	"strings"
-)
-
-const (
-	MkAsciiText    string = "0"
-	MkUnicodeText  string = "5"
-	MkUDHFormatted string = "6"
 )
 
 type MTSendResponseInfo struct {
