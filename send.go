@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Monday March 13th 2023 09:41:22 +0800
+ * Last Modified: Monday March 13th 2023 09:53:52 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -88,6 +88,7 @@ func SendSingleMT(textType string, to string, from string, message string, title
 	for key, value := range params {
 		q.Add(key, value)
 	}
+
 	req.URL.RawQuery = q.Encode()
 
 	if os.Getenv("DEBUG") == "true" {
