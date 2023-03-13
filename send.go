@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Monday March 13th 2023 10:15:06 +0800
+ * Last Modified: Monday March 13th 2023 10:26:37 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -17,7 +17,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"os"
 	"strings"
 )
@@ -59,14 +58,9 @@ func SendSingleMT(textType string, to string, from string, message string, title
 	}
 
 	encodedMessage := message
-	if textType == MkAsciiText {
+	if textType == MkUnicodeText {
 		if os.Getenv("DEBUG") == "true" {
-			fmt.Printf("Message will be ASCII encoded")
-		}
-		encodedMessage = url.PathEscape(message)
-	} else if textType == MkUnicodeText {
-		if os.Getenv("DEBUG") == "true" {
-			fmt.Printf("Message will be UCS2 encoded")
+			fmt.Println("Text will be UCS2 encoded")
 		}
 		encodedMessage = convertToUCS2(message)
 	}
@@ -88,8 +82,7 @@ func SendSingleMT(textType string, to string, from string, message string, title
 	for key, value := range params {
 		q.Add(key, value)
 	}
-
-	//req.URL.RawQuery = q.Encode()
+	req.URL.RawQuery = q.Encode()
 
 	if os.Getenv("DEBUG") == "true" {
 		fmt.Printf("API Url: %s\n", req.URL.String())
@@ -128,6 +121,9 @@ func SendMultiMT(textType string, to []string, from string, message string, titl
 
 	encodedMessage := message
 	if textType == MkUnicodeText {
+		if os.Getenv("DEBUG") == "true" {
+			fmt.Println("Text will be UCS2 encoded")
+		}
 		encodedMessage = convertToUCS2(message)
 	}
 
@@ -148,7 +144,7 @@ func SendMultiMT(textType string, to []string, from string, message string, titl
 	for key, value := range params {
 		q.Add(key, value)
 	}
-	//req.URL.RawQuery = q.Encode()
+	req.URL.RawQuery = q.Encode()
 
 	if os.Getenv("DEBUG") == "true" {
 		fmt.Printf("API Url: %s\n", req.URL.String())
