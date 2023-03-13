@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Monday March 13th 2023 08:49:13 +0800
+ * Last Modified: Monday March 13th 2023 09:32:21 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -60,7 +60,7 @@ func SendSingleMT(textType string, to string, from string, message string, title
 
 	encodedMessage := message
 	if textType == MkAsciiText {
-		encodedMessage = url.QueryEscape(message)
+		encodedMessage = url.PathEscape(message)
 	} else if textType == MkUnicodeText {
 		encodedMessage = convertToUCS2(message)
 	}
