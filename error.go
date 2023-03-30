@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Sunday March 12th 2023 01:20:16 +0800
+ * Last Modified: Thursday March 30th 2023 14:30:02 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -13,11 +13,13 @@
 
 package macrokiosk
 
+import "fmt"
+
 type MkResponseBodyError struct {
 	ViolationPart []byte
 	Message       string
 }
 
 func (m *MkResponseBodyError) Error() string {
-	return "Unexpected response body structure found"
+	return fmt.Sprintf("Unexpected response body structure found. Violation part: %s, Message: %s", m.ViolationPart, m.Message)
 }

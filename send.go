@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Thursday March 30th 2023 14:04:20 +0800
+ * Last Modified: Thursday March 30th 2023 14:21:58 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -107,6 +107,10 @@ func SendSingleMT(textType string, to string, from string, message string, title
 			fmt.Printf("Error: %s\n", err.Error())
 		}
 		return nil, err
+	}
+
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Printf("Received Body: %s\n", body)
 	}
 
 	callResult, err := decodeSingleMTResponse(body)
