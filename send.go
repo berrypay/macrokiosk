@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Thursday March 30th 2023 16:05:23 +0800
+ * Last Modified: Thursday March 30th 2023 16:27:20 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -114,7 +114,10 @@ func SendSingleMT(textType string, to string, from string, message string, title
 	}
 
 	if strings.EqualFold(string(body), "401") {
-		return nil, fmt.Errorf("invalid credentials")
+		return nil, &MkError{
+			Code:    string(body),
+			Message: "invalid credentials",
+		}
 	}
 
 	callResult, err := decodeSingleMTResponse(body)
