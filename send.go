@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Thursday March 30th 2023 16:27:20 +0800
+ * Last Modified: Saturday April 1st 2023 15:03:01 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -19,6 +19,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 type MTSendResponseInfo struct {
@@ -51,7 +52,7 @@ type MTSendRequestParams struct {
 	Title string `json:"title" validate:"string" message:"string: The field {field} must be a string" label:"title"`
 }
 
-func SendSingleMT(textType string, to string, from string, message string, title string) (*MTSendResponseSingleData, error) {
+func SendSingleMT(textType string, to string, from string, message string, title string, timeout int) (*MTSendResponseSingleData, error) {
 	req, err := http.NewRequest("GET", Settings.BaseUrl+Settings.MTSendPath, nil)
 	if err != nil {
 		return nil, err
@@ -92,6 +93,9 @@ func SendSingleMT(textType string, to string, from string, message string, title
 
 	// Send the HTTP request and read the response
 	client := &http.Client{}
+	if timeout > 0 {
+		client.Timeout = time.Duration(timeout) * time.Second
+	}
 	resp, err := client.Do(req)
 	if err != nil {
 		if os.Getenv("DEBUG") == "true" {
